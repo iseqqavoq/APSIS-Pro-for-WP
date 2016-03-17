@@ -1,5 +1,4 @@
 jQuery(document).ready(function ($) {
-console.log(typeof ajax_object.verified);
     if (ajax_object.verified === '1') {
         $('#apsispro-shortcode-generator').show();
         $('#apsispro-verified-msg').show();
@@ -11,7 +10,7 @@ console.log(typeof ajax_object.verified);
     $('#generate-shortcode-button').click(function (event) {
         event.preventDefault(); // cancel default behavior
 
-        $generatedCode = ' [apsis-pro id="'
+        $generatedCode = ' [apsispro id="'
 
         $(".apsispro_select_mailing_list option:selected").each(function () {
             $generatedCode += $(this).val() + '"';
@@ -21,7 +20,11 @@ console.log(typeof ajax_object.verified);
             $generatedCode += ' name="true"';
         }
 
-        $generatedCode += ' thank-you="' + $('.apsispro_input_thank_you_msg').val() + '"]';
+        if ($('.apsispro_input_thank_you_msg').val() != '') {
+            $generatedCode += ' thankyou="' + $('.apsispro_input_thank_you_msg').val() + '"';
+        }
+
+        $generatedCode += ']';
 
         $('#apsispro-generated-code').val($generatedCode);
     });

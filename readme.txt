@@ -3,7 +3,7 @@ Contributors: iseqqavoq
 Tags: apsis, newsletter, subscription, mailing list
 Requires at least: 3.9
 Tested up to: 4.4.2
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -17,6 +17,8 @@ If you have any general questions regarding this plugin, please visit WordPress 
 For more information on integration with APSIS Pro, goto http://customers.anpdm.com/apsisproforwordpress/help.html. 
 
 Visit APSIS’ web page at www.apsis.com.
+
+Feel free to make pull requests for improvement on Github at https://github.com/iseqqavoq/apsis-pro-for-wp
 
 == Installation ==
 1. Upload the apsis-pro-for-wp folder to the /wp-content/plugins/ directory
