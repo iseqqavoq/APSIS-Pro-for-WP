@@ -3,7 +3,7 @@ Contributors: iseqqavoq
 Tags: apsis, newsletter, subscription, mailing list
 Requires at least: 3.9
 Tested up to: 4.4.2
-Stable tag: 1.0.2
+Stable tag: 1.0.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -42,3 +42,14 @@ Visit APSIS’ web page at www.apsis.com.
 1. Subscription form
 2. Settings page
 3. Widget settings
+
+== Changelog ==
+= 1.0.3 =
+* Fixed warnings and notices that showed up, when in debug mode.
+* Fixed issue with API Key, when copy/pasted key had spaces in it.
+= 1.0.2 =
+* Fixed error that made custom thank you message not show up, when using shortcode.
+= 1.0.1 =
+* Fixed error that made shortcode not showing up.
+= 1.0 =
+* First version

@@ -3,7 +3,7 @@
 Plugin Name: APSIS Pro for WP
 Plugin URI: https://wordpress.org/plugins/apsis-pro-for-wp
 Description: APSIS Pro for WP integrates APSIS Pro with WordPress, so you can add subscription forms to APSIS Pro on your site.
-Version: 1.0.2
+Version: 1.0.3
 Author: iqq
 Author URI: http://www.iqq.se/
 Tags: apsis, newsletter, subscription, mailing list
