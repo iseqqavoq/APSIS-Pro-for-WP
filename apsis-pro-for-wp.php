@@ -303,6 +303,8 @@ class APSIS_Pro_For_WP {
 			)
 		);
 
+		$data['apsispro_input_api_key'] = preg_replace( '/\s+/', '', $data['apsispro_input_api_key'] );
+
 		$response = wp_remote_post( 'http://' . $data['apsispro_input_api_key'] . ':@se.api.anpdm.com/mailinglists/v2/all', $args );
 
 		if ( 200 !== $response['response']['code'] ) :
