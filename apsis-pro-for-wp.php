@@ -243,7 +243,9 @@ class APSIS_Pro_For_WP {
 		?>
 		<input type='checkbox'
 		       class='apsispro_checkbox_name'
-		       name='apsispro_settings[apsispro_checkbox_name]'<?php checked( $options['apsispro_checkbox_name'], 1 ); ?>
+		       name='apsispro_settings[apsispro_checkbox_name]'<?php if ( isset( $options['apsispro_checkbox_name'] ) ) {
+			checked( $options['apsispro_checkbox_name'], 1 );
+		} ?>
 		       value='1'>
 		<?php
 
@@ -270,6 +272,15 @@ class APSIS_Pro_For_WP {
 	public static function apsispro_settings_section_callback() {
 
 		echo sprintf( __( 'Enter your APSIS Pro API Key and click on <i>Save API Key</i>. For more information on integration with APSIS Pro, %sclick here%s.', 'apsispro' ), '<a href="http://customers.anpdm.com/apsisproforwordpress/help.html" target="_blank">', '</a>' );
+
+	}
+
+	/**
+	 * Instructions for the hidden settings fields
+	 */
+	public static function apsispro_hidden_settings_section_callback() {
+
+		echo '';
 
 	}
 
@@ -444,8 +455,8 @@ class APSIS_Pro_For_WP {
 
 		$atts = shortcode_atts(
 			array(
-				'id'        => '',
-				'name'      => '',
+				'id'       => '',
+				'name'     => '',
 				'thankyou' => __( 'Thank you for submitting!', 'apsispro' )
 			), $atts
 		);
