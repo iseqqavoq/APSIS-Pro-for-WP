@@ -451,7 +451,7 @@ class APSIS_Pro_For_WP {
 	/**
 	 * Shortcode for showing subscription form
 	 */
-	function apsispro_shortcode( $atts, $content = '' ) {
+	public static function apsispro_shortcode( $atts, $content = '' ) {
 
 		$atts = shortcode_atts(
 			array(
