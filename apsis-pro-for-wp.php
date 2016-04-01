@@ -228,7 +228,7 @@ class APSIS_Pro_For_WP {
 		$options = get_option( 'apsispro_settings' );
 		?>
 		<select class="apsispro_select_mailing_list" name='apsispro_settings[apsispro_select_mailing_list]' $>
-			<?php echo self::get_mailinglists( intval( $options['apsispro_select_mailing_list'] ) ); ?>
+			<?php echo self::get_mailinglists( intval( isset( $options['apsispro_select_mailing_list'] ) ) ); ?>
 		</select>
 		<?php
 
