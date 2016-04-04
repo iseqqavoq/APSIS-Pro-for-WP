@@ -23,7 +23,6 @@ jQuery(document).ready(function ($) {
                 var obj = jQuery.parseJSON(response);
 
                 if(obj['Code'] === 1) { //Subscription successful
-                    console.log($currentForm);
                     $currentForm.next('.apsispro-signup-response').text(thankyou);
                     $currentForm.hide();
                 } else if(obj['Code'] === -2) { //E-mail address invalid
