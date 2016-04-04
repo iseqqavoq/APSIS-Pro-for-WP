@@ -3,7 +3,7 @@ Contributors: iseqqavoq
 Tags: apsis, newsletter, subscription, mailing list
 Requires at least: 3.9
 Tested up to: 4.4.2
-Stable tag: 1.0.3
+Stable tag: 1.0.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -44,6 +44,10 @@ Visit APSIS’ web page at www.apsis.com.
 3. Widget settings
 
 == Changelog ==
+= 1.0.4 =
+* Handled issue with form not sending, when no name field.
+* Fixed notices that showed up.
+* Removed console message.
 = 1.0.3 =
 * Fixed warnings and notices that showed up, when in debug mode.
 * Fixed issue with API Key, when copy/pasted key had spaces in it.

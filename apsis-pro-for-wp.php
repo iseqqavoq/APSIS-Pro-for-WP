@@ -3,7 +3,7 @@
 Plugin Name: APSIS Pro for WP
 Plugin URI: https://wordpress.org/plugins/apsis-pro-for-wp
 Description: APSIS Pro for WP integrates APSIS Pro with WordPress, so you can add subscription forms to APSIS Pro on your site.
-Version: 1.0.3
+Version: 1.0.4
 Author: iqq
 Author URI: http://www.iqq.se/
 Tags: apsis, newsletter, subscription, mailing list
@@ -88,8 +88,8 @@ class APSIS_Pro_For_WP {
 				'Content-Type' => 'application/json'
 			),
 			'body'    => json_encode( array(
-					'Email' => $_POST['email'],
-					'Name'  => $_POST['name']
+					'Email' => ( isset( $_POST['email'] ) ? $_POST['email'] : '' ),
+					'Name'  => ( isset( $_POST['name'] ) ? $_POST['name'] : '' )
 				)
 			)
 		);
@@ -226,9 +226,14 @@ class APSIS_Pro_For_WP {
 	public static function apsispro_select_mailing_list_render() {
 
 		$options = get_option( 'apsispro_settings' );
+		if( isset( $options['apsispro_select_mailing_list'] ) ) :
+			$selected_mailinglist = $options['apsispro_select_mailing_list'];
+		else :
+			$selected_mailinglist = -1;
+		endif;
 		?>
-		<select class="apsispro_select_mailing_list" name='apsispro_settings[apsispro_select_mailing_list]' $>
-			<?php echo self::get_mailinglists( intval( isset( $options['apsispro_select_mailing_list'] ) ) ); ?>
+		<select class="apsispro_select_mailing_list" name='apsispro_settings[apsispro_select_mailing_list]'>
+			<?php echo self::get_mailinglists( intval( $selected_mailinglist ) ); ?>
 		</select>
 		<?php
 
