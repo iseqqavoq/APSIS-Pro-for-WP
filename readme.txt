@@ -44,6 +44,8 @@ Visit APSIS’ web page at www.apsis.com.
 3. Widget settings
 
 == Changelog ==
+= 1.0.5 =
+* Fixed issue with form not submitting for logged out users.
 = 1.0.4 =
 * Handled issue with form not sending, when no name field.
 * Fixed notices that showed up.
