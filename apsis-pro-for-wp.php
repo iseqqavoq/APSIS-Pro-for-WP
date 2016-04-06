@@ -309,7 +309,7 @@ class APSIS_Pro_For_WP {
 		<input type='text'
 		       class='apsispro_input_thank_you_msg'
 		       name='apsispro_settings[apsispro_input_thank_you_msg]'
-		       value='<?php echo $options['apsispro_input_thank_you_msg']; ?>'>
+		       value='<?php if ( isset( $options['apsispro_input_thank_you_msg'] ) ) : echo $options['apsispro_input_thank_you_msg']; endif; ?>'>
 		<?php
 
 	}
