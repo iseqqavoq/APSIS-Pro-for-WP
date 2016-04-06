@@ -79,7 +79,7 @@ class APSIS_Pro_For_WP {
 	}
 
 	/**
-	 * Create new subscriber to mailing list at APSUS.
+	 * Create new subscriber to mailing list at APSIS.
 	 */
 	public static function apsispro_action_callback() {
 
@@ -95,7 +95,7 @@ class APSIS_Pro_For_WP {
 			)
 		);
 		$options  = get_option( 'apsispro_settings' );
-		$response = wp_remote_post( 'http://' . $options['apsispro_input_api_key'] . ':@se.api.anpdm.com/v1/subscribers/mailinglist/' . $_POST['listid'] . '/create?updateIfExists=true', $args );
+		$response = wp_remote_post( 'http://' . $options['apsispro_input_api_key'] . ':@' . self::get_api_url() . '/v1/subscribers/mailinglist/' . $_POST['listid'] . '/create?updateIfExists=true', $args );
 
 		if ( is_wp_error( $response ) ):
 			print( - 1 );
@@ -153,6 +153,14 @@ class APSIS_Pro_For_WP {
 			'apsispro_input_api_key',
 			__( 'APSIS Pro API Key', 'apsispro' ),
 			array( __CLASS__, 'apsispro_input_api_key_render' ),
+			'apsispro_group',
+			'apsispro_group_section'
+		);
+
+		add_settings_field(
+			'apsispro_select_api_url',
+			__( 'We access APSIS Pro via', 'apsispro' ),
+			array( __CLASS__, 'apsispro_select_api_url_render' ),
 			'apsispro_group',
 			'apsispro_group_section'
 		);
@@ -222,15 +230,49 @@ class APSIS_Pro_For_WP {
 	}
 
 	/**
+	 * Drop-down list for API URLs
+	 */
+	public static function apsispro_select_api_url_render() {
+
+		$api_urls = array(
+			array(
+				'name' => 'www.anpdm.com',
+				'url'  => 'se.api.anpdm.com'
+			),
+			array(
+				'name' => 'www.anpasia.com',
+				'url'  => 'se.api.anpasia.com'
+			)
+		);
+		$options  = get_option( 'apsispro_settings' );
+		if ( isset( $options['apsispro_select_api_url'] ) ) :
+			$selected_api_url = $options['apsispro_select_api_url'];
+		else :
+			$selected_api_url = 'se.api.anpdm.com';
+		endif;
+		?>
+		<select class="apsispro_select_api_url" name='apsispro_settings[apsispro_select_api_url]'>
+			<?php foreach ( $api_urls as $api_url ) {
+				?>
+				<option
+					value="<?php echo $api_url['url']; ?>"<?php echo ( $selected_api_url == $api_url['url'] ) ? ' selected="selected"' : ''; ?>><?php echo $api_url['name']; ?></option>
+				<?php
+			} ?>
+		</select>
+		<?php
+
+	}
+
+	/**
 	 * Drop-down list for mailing lists
 	 */
 	public static function apsispro_select_mailing_list_render() {
 
 		$options = get_option( 'apsispro_settings' );
-		if( isset( $options['apsispro_select_mailing_list'] ) ) :
+		if ( isset( $options['apsispro_select_mailing_list'] ) ) :
 			$selected_mailinglist = $options['apsispro_select_mailing_list'];
 		else :
-			$selected_mailinglist = -1;
+			$selected_mailinglist = - 1;
 		endif;
 		?>
 		<select class="apsispro_select_mailing_list" name='apsispro_settings[apsispro_select_mailing_list]'>
@@ -277,7 +319,7 @@ class APSIS_Pro_For_WP {
 	 */
 	public static function apsispro_settings_section_callback() {
 
-		echo sprintf( __( 'Enter your APSIS Pro API Key and click on <i>Save API Key</i>. For more information on integration with APSIS Pro, %sclick here%s.', 'apsispro' ), '<a href="http://customers.anpdm.com/apsisproforwordpress/help.html" target="_blank">', '</a>' );
+		echo sprintf( __( 'Enter your APSIS Pro API Key and select the website you access APSIS Pro through, then click on <i>Save API Settings</i>. For more information on integration with APSIS Pro, %sclick here%s.', 'apsispro' ), '<a href="http://customers.anpdm.com/apsisproforwordpress/help.html" target="_blank">', '</a>' );
 
 	}
 
@@ -311,7 +353,7 @@ class APSIS_Pro_For_WP {
 
 		$data['apsispro_input_api_key'] = preg_replace( '/\s+/', '', $data['apsispro_input_api_key'] );
 
-		$response = wp_remote_post( 'http://' . $data['apsispro_input_api_key'] . ':@se.api.anpdm.com/mailinglists/v2/all', $args );
+		$response = wp_remote_post( 'http://' . $data['apsispro_input_api_key'] . ':@' . $data['apsispro_select_api_url'] . '/mailinglists/v2/all', $args );
 
 		if ( 200 !== $response['response']['code'] ) :
 			$data['apsispro_hidden_verified'] = 0;
@@ -319,7 +361,7 @@ class APSIS_Pro_For_WP {
 			add_settings_error(
 				'apiCallError',
 				'api',
-				__( 'An error occured. Please make sure you have entered the correct APSIS API Key.', 'apsispro' ),
+				__( 'An error occured. Please make sure you have entered the correct APSIS API Key and selected the correct APSIS website.', 'apsispro' ),
 				'error'
 			);
 		else :
@@ -342,7 +384,7 @@ class APSIS_Pro_For_WP {
 			<?php
 			settings_fields( 'apsispro_group' );
 			do_settings_sections( 'apsispro_group' );
-			submit_button( __( 'Save API Key', 'apsispro' ), 'primary', 'save-api-key-button' );
+			submit_button( __( 'Save API Settings', 'apsispro' ), 'primary', 'save-api-settings-button' );
 			settings_fields( 'apsispro_hidden_group' );
 			do_settings_sections( 'apsispro_hidden_group' );
 			?>
@@ -374,7 +416,22 @@ class APSIS_Pro_For_WP {
 	}
 
 	/**
-	 * Returns mailing lists from APSUS.
+	 * Returns selected APSIS API URL.
+	 */
+	public static function get_api_url() {
+
+		$options = get_option( 'apsispro_settings' );
+
+		if ( isset( $options['apsispro_select_api_url'] ) ) :
+			return $options['apsispro_select_api_url'];
+		else:
+			return 'se.api.anpasia.com';
+		endif;
+
+	}
+
+	/**
+	 * Returns mailing lists from APSIS.
 	 *
 	 * @param int $mailinglist_id The id of the mailing list that will be selected in drop-down list
 	 */
@@ -387,7 +444,7 @@ class APSIS_Pro_For_WP {
 		);
 
 		$options  = get_option( 'apsispro_settings' );
-		$response = wp_remote_post( 'http://' . $options['apsispro_input_api_key'] . ':@se.api.anpdm.com/mailinglists/v2/all', $args );
+		$response = wp_remote_post( 'http://' . $options['apsispro_input_api_key'] . ':@' . self::get_api_url() . '/mailinglists/v2/all', $args );
 
 		if ( 200 === $response['response']['code'] ) :
 
@@ -415,7 +472,7 @@ class APSIS_Pro_For_WP {
 	}
 
 	/**
-	 * Shows a subscription form for APSUS.
+	 * Shows a subscription form for APSIS.
 	 *
 	 * @param int $mailinglist_id The id of the mailing list that user will be subscribed to
 	 * @param bool $show_name Decides if name field will be visible

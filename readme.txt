@@ -21,15 +21,17 @@ Visit APSIS’ web page at www.apsis.com.
 Feel free to make pull requests for improvement on Github at https://github.com/iseqqavoq/apsis-pro-for-wp
 
 == Installation ==
-1. Upload the apsis-pro-for-wp folder to the /wp-content/plugins/ directory
+1. Upload the apsis-pro-for-wp folder to the /wp-content/plugins/ directory
 
 2. Activate the plugin through the Plugins menu in WordPress
 
 3. Check the APSIS Pro settings page in order to add your APSIS Pro API Key. For more information on integration with APSIS Pro, goto http://customers.anpdm.com/apsisproforwordpress/help.html
 
-4. Insert API Key and click Save API Key.
+4. Insert API Key and select the website you access APSIS Pro through.
 
-5. To add the subscription form to your site, either use the Shortcode Generator on the settings page to generate a shortcode or go to Widgets and add APSIS Pro Widget.
+5. Click Save API Settings.
+
+6. To add the subscription form to your site, either use the Shortcode Generator on the settings page to generate a shortcode or go to Widgets and add APSIS Pro Widget.
 
 == Frequently Asked Questions ==
 If you have any general questions regarding this plugin, please visit WordPress forums.
