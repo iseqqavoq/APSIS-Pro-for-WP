@@ -83,7 +83,7 @@ class APSIS_Pro_For_WP {
 	 */
 	public static function apsispro_action_callback() {
 
-		$args     = array(
+		$args    = array(
 			'headers' => array(
 				'Accept'       => 'application/json',
 				'Content-Type' => 'application/json'
@@ -94,8 +94,13 @@ class APSIS_Pro_For_WP {
 				)
 			)
 		);
-		$options  = get_option( 'apsispro_settings' );
-		$response = wp_remote_post( 'http://' . $options['apsispro_input_api_key'] . ':@' . self::get_api_url() . '/v1/subscribers/mailinglist/' . $_POST['listid'] . '/create?updateIfExists=true', $args );
+		$options = get_option( 'apsispro_settings' );
+		if ( isset( $options['apsispro_hidden_https'] ) ) :
+			$https = $options['apsispro_hidden_https'];
+		else :
+			$https = false;
+		endif;
+		$response = wp_remote_post( self::get_api_url( $https, $options['apsispro_input_api_key'], $options['apsispro_select_api_url'] ) . '/v1/subscribers/mailinglist/' . $_POST['listid'] . '/create?updateIfExists=true', $args );
 
 		if ( is_wp_error( $response ) ):
 			print( - 1 );
@@ -174,6 +179,14 @@ class APSIS_Pro_For_WP {
 		);
 
 		add_settings_field(
+			'apsispro_hidden_https',
+			null,
+			array( __CLASS__, 'apsispro_hidden_https_render' ),
+			'apsispro_hidden_group',
+			'apsispro_hidden_group_section'
+		);
+
+		add_settings_field(
 			'apsispro_select_mailing_list',
 			__( 'Select Mailing List', 'apsispro' ),
 			array( __CLASS__, 'apsispro_select_mailing_list_render' ),
@@ -214,6 +227,20 @@ class APSIS_Pro_For_WP {
 	}
 
 	/**
+	 * Hidden field for verification status
+	 */
+	public static function apsispro_hidden_https_render() {
+
+		$options = get_option( 'apsispro_settings' );
+		?>
+		<input type='hidden'
+		       name='apsispro_hidden_settings[apsispro_hidden_https]'
+		       value='<?php echo $options['apsispro_hidden_https']; ?>'>
+		<?php
+
+	}
+
+	/**
 	 * Input field for API Key
 	 */
 	public static function apsispro_input_api_key_render() {
@@ -237,7 +264,7 @@ class APSIS_Pro_For_WP {
 		$api_urls = array(
 			array(
 				'name' => 'www.anpdm.com',
-				'url'  => 'se.api.anpdm.com'
+				'url'  => 'se.api.anpdm.com:8443'
 			),
 			array(
 				'name' => 'www.anpasia.com',
@@ -353,9 +380,26 @@ class APSIS_Pro_For_WP {
 
 		$data['apsispro_input_api_key'] = preg_replace( '/\s+/', '', $data['apsispro_input_api_key'] );
 
-		$response = wp_remote_post( 'http://' . $data['apsispro_input_api_key'] . ':@' . $data['apsispro_select_api_url'] . '/mailinglists/v2/all', $args );
+		$fallback = false;
+		do {
+			if ( $fallback ) :
+				$response = wp_remote_post( self::get_api_url( false, $data['apsispro_input_api_key'], $data['apsispro_select_api_url'] ) . '/mailinglists/v2/all', $args );
+			else :
+				$response = wp_remote_post( self::get_api_url( true, $data['apsispro_input_api_key'], $data['apsispro_select_api_url'] ) . '/mailinglists/v2/all', $args );
+			endif;
 
-		if ( 200 !== $response['response']['code'] ) :
+			if ( is_wp_error( $response ) && ! $fallback ) :
+				if ( 'connect() timed out!' === $response->get_error_message() ) :
+					$fallback = true;
+				else:
+					$fallback = false;
+				endif;
+			else:
+				$fallback = false;
+			endif;
+		} while ( $fallback );
+
+		if ( is_wp_error( $response ) || 200 !== $response['response']['code'] ) :
 			$data['apsispro_hidden_verified'] = 0;
 
 			add_settings_error(
@@ -418,15 +462,22 @@ class APSIS_Pro_For_WP {
 	/**
 	 * Returns selected APSIS API URL.
 	 */
-	public static function get_api_url() {
+	public static function get_api_url( $https, $api_key, $api_url ) {
 
-		$options = get_option( 'apsispro_settings' );
-
-		if ( isset( $options['apsispro_select_api_url'] ) ) :
-			return $options['apsispro_select_api_url'];
-		else:
-			return 'se.api.anpasia.com';
+		if ( ! isset( $api_url ) ) :
+			$api_url = 'se.api.anpdm.com';
+			$https = false;
 		endif;
+
+		if ( $https ) :
+			$http_string   = 'https://';
+		else:
+			$api_url_parts = explode( ':', $api_url );
+			$api_url       = $api_url_parts[0];
+			$http_string = 'http://';
+		endif;
+
+		return $http_string . $api_key . ':@' . $api_url;
 
 	}
 
@@ -443,8 +494,13 @@ class APSIS_Pro_For_WP {
 			)
 		);
 
-		$options  = get_option( 'apsispro_settings' );
-		$response = wp_remote_post( 'http://' . $options['apsispro_input_api_key'] . ':@' . self::get_api_url() . '/mailinglists/v2/all', $args );
+		$options = get_option( 'apsispro_settings' );
+		if ( isset( $options['apsispro_hidden_https'] ) ) :
+			$https = $options['apsispro_hidden_https'];
+		else :
+			$https = false;
+		endif;
+		$response = wp_remote_post( self::get_api_url( $https, $options['apsispro_input_api_key'], $options['apsispro_select_api_url'] ) . '/mailinglists/v2/all', $args );
 
 		if ( 200 === $response['response']['code'] ) :
 
