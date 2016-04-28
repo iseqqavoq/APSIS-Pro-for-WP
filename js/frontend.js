@@ -1,9 +1,9 @@
 jQuery(document).ready(function ($) {
 
     /*
-    Handle clicks on submit button in subscription form
+     Handle clicks on submit button in subscription form
      */
-    $('.apsispro-form').submit(function(e){
+    $('.apsispro-form').submit(function (e) {
         var $currentForm = $(this);
         var listid = $currentForm.find('.apsispro-signup-mailinglist-id').val();
         var email = $(this).find('.apsispro-signup-email').val();
@@ -19,13 +19,13 @@ jQuery(document).ready(function ($) {
 
         $.post(ajax_object.ajax_url, data, function (response) {
 
-            if(response !== undefined || response !== -1) {
+            if (response !== undefined || response !== -1) {
                 var obj = jQuery.parseJSON(response);
 
-                if(obj['Code'] === 1) { //Subscription successful
+                if (obj['Code'] === 1) { //Subscription successful
                     $currentForm.next('.apsispro-signup-response').text(thankyou);
                     $currentForm.hide();
-                } else if(obj['Code'] === -2) { //E-mail address invalid
+                } else if (obj['Message'].indexOf('is not a valid e-mail address') > -1) { //E-mail address invalid
                     $currentForm.next('.apsispro-signup-response').text(ajax_object.error_msg_email);
                 } else { //Error
                     $currentForm.next('.apsispro-signup-response').text(ajax_object.error_msg_standard);
