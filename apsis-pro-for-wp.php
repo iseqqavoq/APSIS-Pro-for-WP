@@ -42,7 +42,7 @@ class APSIS_Pro_For_WP {
 	 */
 	public static function apsispro_enqueue_backend_scripts() {
 
-		wp_enqueue_script( 'backend', plugins_url( '/js/backend.js', __FILE__ ), array( 'jquery' ) );
+		wp_enqueue_script( 'backend', plugins_url( '/js/backend.min.js', __FILE__ ), array( 'jquery' ) );
 
 		$options = get_option( 'apsispro_settings' );
 		if ( $options['apsispro_hidden_verified'] ) :
@@ -63,7 +63,7 @@ class APSIS_Pro_For_WP {
 	 */
 	public static function apsispro_enqueue_frontend_scripts() {
 
-		wp_enqueue_script( 'frontend', plugins_url( '/js/frontend.js', __FILE__ ), array( 'jquery' ) );
+		wp_enqueue_script( 'frontend', plugins_url( '/js/frontend.min.js', __FILE__ ), array( 'jquery' ) );
 
 		wp_localize_script( 'frontend', 'ajax_object',
 			array(
