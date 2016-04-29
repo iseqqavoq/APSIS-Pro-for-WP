@@ -3,7 +3,7 @@ Contributors: iseqqavoq
 Tags: apsis, newsletter, subscription, mailing list
 Requires at least: 3.9
 Tested up to: 4.4.2
-Stable tag: 1.0.5
+Stable tag: 1.0.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -46,6 +46,12 @@ Visit APSIS’ web page at www.apsis.com.
 3. Widget settings
 
 == Changelog ==
+= 1.0.6 =
+* Added feature to be able to change API url
+* Added https support
+* Minified the js files
+* Fixed notice that showed up, when in debug mode.
+* Modified error handling.
 = 1.0.5 =
 * Fixed issue with form not submitting for logged out users.
 = 1.0.4 =

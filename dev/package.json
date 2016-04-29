@@ -1,6 +1,6 @@
 {
   "name": "apsis-pro-for-wp",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "APSIS Pro for WP integrates APSIS Pro with WordPress, so you can add subscription forms to APSIS Pro on your site.",
   "main": "Gruntfile.js",
   "dependencies": {
