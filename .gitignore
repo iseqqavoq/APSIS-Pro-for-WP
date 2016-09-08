@@ -1,4 +1,4 @@
-dev/js/node_modules
-dev/js/npm-debug.log
+dev/node_modules
+dev/npm-debug.log
 .idea
 .DS_Store

@@ -235,7 +235,7 @@ class APSIS_Pro_For_WP {
 		?>
 		<input type='hidden'
 		       name='apsispro_hidden_settings[apsispro_hidden_https]'
-		       value='<?php echo $options['apsispro_hidden_https']; ?>'>
+		       value='<?php if ( isset( $options['apsispro_hidden_https'] ) ) : echo $options['apsispro_hidden_https']; else: echo false; endif; ?>'>
 		<?php
 
 	}
@@ -582,7 +582,10 @@ class APSIS_Pro_For_WP {
 			), $atts
 		);
 
-		return self::get_form( $atts['id'], $atts['name'], $atts['thankyou'] );
+		ob_start();
+		self::get_form( $atts['id'], $atts['name'], $atts['thankyou'] );
+		$output = ob_get_clean();
+		return $output;
 
 	}
 
