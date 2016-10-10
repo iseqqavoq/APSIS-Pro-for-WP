@@ -83,15 +83,17 @@ class APSIS_Pro_For_WP {
 	 */
 	public static function apsispro_action_callback() {
 
+		$form_data = array(
+			'Email' => ( isset( $_POST['email'] ) ? $_POST['email'] : '' ),
+			'Name'  => ( isset( $_POST['name'] ) ? $_POST['name'] : '' )
+		);
+
 		$args    = array(
 			'headers' => array(
 				'Accept'       => 'application/json',
 				'Content-Type' => 'application/json'
 			),
-			'body'    => json_encode( array(
-					'Email' => ( isset( $_POST['email'] ) ? $_POST['email'] : '' ),
-					'Name'  => ( isset( $_POST['name'] ) ? $_POST['name'] : '' )
-				)
+			'body'    => json_encode( $form_data
 			)
 		);
 		$options = get_option( 'apsispro_settings' );
@@ -106,6 +108,9 @@ class APSIS_Pro_For_WP {
 			print( - 1 );
 		else:
 			print( $response['body'] );
+			ob_start();
+			do_action( 'apsispro_after_form_registration', $form_data );
+			ob_end_clean();
 		endif;
 
 		wp_die();
