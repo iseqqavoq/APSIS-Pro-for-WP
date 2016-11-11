@@ -10,11 +10,41 @@ jQuery(document).ready(function ($) {
     $('#generate-shortcode-button').click(function (event) {
         event.preventDefault(); // cancel default behavior
 
-        $generatedCode = ' [apsispro id="'
+        $generatedCode = '[apsispro id="'
 
-        $(".apsispro_select_mailing_list option:selected").each(function () {
-            $generatedCode += $(this).val() + '"';
+        $firstMailinglist = true;
+
+        $('.apsispro_mailinglist_checkboxes input').each(function () {
+
+            if ($(this).is(':checked')) {
+                if ($firstMailinglist) {
+                    $generatedCode += $(this).val();
+                    $firstMailinglist = false;
+                } else {
+                    $generatedCode += ',' + $(this).val();
+                }
+            }
         });
+
+        $generatedCode += '"';
+
+        $generatedCode += ' text="'
+
+        $firstMailinglist = true;
+
+        $('.apsispro_mailinglist_checkboxes input').each(function () {
+
+            if ($(this).is(':checked')) {
+                if ($firstMailinglist) {
+                    $generatedCode += $(this).attr('name');
+                    $firstMailinglist = false;
+                } else {
+                    $generatedCode += ',' + $(this).attr('name');
+                }
+            }
+        });
+
+        $generatedCode += '"';
 
         if ($('.apsispro_checkbox_name').is(':checked')) {
             $generatedCode += ' name="true"';

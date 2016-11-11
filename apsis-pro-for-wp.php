@@ -67,9 +67,10 @@ class APSIS_Pro_For_WP {
 
 		wp_localize_script( 'frontend', 'ajax_object',
 			array(
-				'ajax_url'           => admin_url( 'admin-ajax.php' ),
-				'error_msg_standard' => __( 'An error occurred, please try again later.', 'apsispro' ),
-				'error_msg_email'    => __( 'The e-mail address is not correct.', 'apsispro' )
+				'ajax_url'           	=> admin_url( 'admin-ajax.php' ),
+				'error_msg_standard' 	=> __( 'An error occurred, please try again later.', 'apsispro' ),
+				'error_msg_email'    	=> __( 'The e-mail address is not correct.', 'apsispro' ),
+				'error_msg_mailinglist' => __( 'A mailing list needs to be selected.', 'apsispro' )
 			) );
 
 	}
@@ -296,7 +297,7 @@ class APSIS_Pro_For_WP {
 	}
 
 	/**
-	 * Drop-down list for mailing lists
+	 * Checkboxes for mailing lists
 	 */
 	public static function apsispro_select_mailing_list_render() {
 
@@ -307,9 +308,18 @@ class APSIS_Pro_For_WP {
 			$selected_mailinglist = - 1;
 		endif;
 		?>
-		<select class="apsispro_select_mailing_list" name='apsispro_settings[apsispro_select_mailing_list]'>
-			<?php echo self::get_mailinglists( intval( $selected_mailinglist ) ); ?>
-		</select>
+		<div class="apsispro_mailinglist_checkboxes">
+			<?php
+			$mailinglist_items = '';
+			$mailinglists = self::get_mailinglists( intval( $selected_mailinglist ) );
+			if ( $mailinglists !== false ) :
+				foreach ( $mailinglists as $index => $list_item ) {
+					$mailinglist_items .= '<input type="checkbox" id="apsispro_mailinglist_checkbox-' . $list_item['Id'] . '" name="' . $list_item['Name'] . '" value="' . $list_item['Id'] . '"><label for="apsispro_mailinglist_checkbox-' . $list_item['Id'] . '">' . $list_item['Name'] . '</label><br>';
+				}
+			endif;
+			echo $mailinglist_items;
+			?>
+		</div>
 		<?php
 
 	}
@@ -508,26 +518,12 @@ class APSIS_Pro_For_WP {
 		$response = wp_remote_post( self::get_api_url( $https, $options['apsispro_input_api_key'], $options['apsispro_select_api_url'] ) . '/mailinglists/v2/all', $args );
 
 		if ( 200 === $response['response']['code'] ) :
+			$json_a			= json_decode( $response['body'], true );
+			$mailinglists	= $json_a['Result'];
 
-			$json_a            = json_decode( $response['body'], true );
-			$result            = $json_a['Result'];
-			$mailinglist_items = '';
-
-			foreach ( $result as $index => $list_item ) {
-				if ( $mailinglist_id === $list_item['Id'] ) :
-					$selected = ' selected="selected"';
-				else:
-					$selected = '';
-				endif;
-				$mailinglist_items .= '<option value="' . $list_item['Id'] . '"' . $selected . '>' . $list_item['Name'] . '</option>';
-			}
-
-			return $mailinglist_items;
-
+			return $mailinglists;
 		else:
-
 			return '';
-
 		endif;
 
 	}
@@ -544,17 +540,26 @@ class APSIS_Pro_For_WP {
 		if ( ! empty( $mailinglist ) ) : ?>
 			<form action="?apsispro_action" method="post" class="apsispro-form">
 				<?php if ( $show_name ) : ?>
-					<p class="apsispro-form-item">
+					<p class="apsispro-form-item apsispro-signup-name-item">
 						<label><?php _e( 'Name: ', 'apsispro' ); ?></label>
 						<input type="text" name="apsispro-signup-name" class="apsispro-signup-name" value=""/>
 					</p>
 				<?php endif; ?>
-				<p class="apsispro-form-item">
+				<p class="apsispro-form-item apsispro-signup-email-item">
 					<label><?php _e( 'E-mail: ', 'apsispro' ); ?></label>
 					<input type="email" name="apsispro-signup-email" class="apsispro-signup-email" value=""/>
 				</p>
-				<input type="hidden" name="apsispro-signup-mailinglist-id" class="apsispro-signup-mailinglist-id"
-				       value="<?php echo $mailinglist ?>"/>
+				<?php
+				if ( count( $mailinglist ) === 1 ) : ?>
+					<input type="hidden" name="apsispro-signup-mailinglist-id" class="apsispro-signup-mailinglist-id"
+						   value="<?php echo $mailinglist[0] ?>"/>
+				<?php else : ?>
+					<p class="apsispro-form-item apsispro-signup-mailinglists-item">
+						<?php foreach ( $mailinglist as $mailinglist_item => $mailinglist_item_text ) {
+							echo '<input type="checkbox" id="apsispro-signup-mailinglists-' . $mailinglist_item . '" name="' . $mailinglist_item_text . '" class="apsispro-signup-mailinglists-id" value="' . $mailinglist_item . '"><label for="apsispro-signup-mailinglists-' . $mailinglist_item . '">' . $mailinglist_item_text . '</label><br>';
+						} ?>
+					</p>
+				<?php endif; ?>
 				<input type="hidden" name="apsispro-signup-thank-you" class="apsispro-signup-thank-you"
 				       value="<?php echo $thank_you ?>"/>
 				<input type="submit" value="<?php _e( 'Subscribe', 'apsispro' ); ?>" name="apsispro-signup-button"
@@ -582,13 +587,18 @@ class APSIS_Pro_For_WP {
 		$atts = shortcode_atts(
 			array(
 				'id'       => '',
+				'text'     => false,
 				'name'     => '',
 				'thankyou' => __( 'Thank you for submitting!', 'apsispro' )
 			), $atts
 		);
 
+		$id_array = explode( ',', $atts['id'] );
+		$text_array = explode( ',', $atts['text'] );
+		$mailinglist_array = array_combine( $id_array, $text_array );
+
 		ob_start();
-		self::get_form( $atts['id'], $atts['name'], $atts['thankyou'] );
+		self::get_form( $mailinglist_array, $atts['name'], $atts['thankyou'] );
 		$output = ob_get_clean();
 		return $output;
 
@@ -645,7 +655,17 @@ class APSIS_Pro_Widget extends WP_Widget {
 			echo '<p>' . $instance['text'] . '</p>';
 		endif;
 
-		APSIS_Pro_For_WP::get_form( $instance['mailinglist'], $instance['show-name'], $instance['thank-you-msg'] );
+		if ( ! empty( $instance['mailinglist'] ) ) :
+
+			$mailinglist_array = array();
+			foreach ( $instance['mailinglist'] as $mailinglist => $list_item ) {
+				$mailinglist_array_item = explode( '|', $list_item );
+				$mailinglist_array[$mailinglist_array_item[0]] = $mailinglist_array_item[1];
+			}
+
+			APSIS_Pro_For_WP::get_form( $mailinglist_array, $instance['show-name'], $instance['thank-you-msg'] );
+
+		endif;
 
 		echo $args['after_widget'];
 
@@ -669,7 +689,7 @@ class APSIS_Pro_Widget extends WP_Widget {
 			$text = __( 'New text', 'apsispro' );
 		}
 		if ( isset( $instance['mailinglist'] ) ) {
-			$mailinglist = intval( $instance['mailinglist'] );
+			$mailinglist = $instance['mailinglist'];
 		} else {
 			$mailinglist = - 1;
 		}
@@ -695,10 +715,22 @@ class APSIS_Pro_Widget extends WP_Widget {
 		</p>
 		<p>
 			<label for="<?php echo $this->get_field_id( 'mailinglist' ); ?>"><?php _e( 'Mailing List:' ); ?></label>
-			<select id="<?php echo $this->get_field_id( 'mailinglist' ); ?>" class="apsispro-select-mailing-list"
-			        name="<?php echo $this->get_field_name( 'mailinglist' ); ?>">
-				<?php echo APSIS_Pro_For_WP::get_mailinglists( $mailinglist ); ?>
-			</select>
+			<div class="apsispro_mailinglist_checkboxes">
+				<?php
+				$mailinglist_items = '';
+				$mailinglists = APSIS_Pro_For_WP::get_mailinglists( intval( $mailinglist ) );
+				if ( $mailinglists !== false ) :
+					foreach ( $mailinglists as $index => $list_item ) {
+						$checked = '';
+						if ( in_array( $list_item['Id'], $mailinglist ) ) :
+							$checked = 'checked';
+						endif;
+						$mailinglist_items .= '<input type="checkbox" name="' . $this->get_field_name( 'mailinglist' ) . '[]" ' . $checked . ' value="' . $list_item['Id'] . '|' . $list_item['Name'] . '">' . $list_item['Name'];
+					}
+				endif;
+				echo $mailinglist_items;
+				?>
+			</div>
 		</p>
 		<p>
 			<label for="<?php echo $this->get_field_id( 'show-name' ); ?>"><?php _e( 'Show name:' ); ?></label>
@@ -727,12 +759,26 @@ class APSIS_Pro_Widget extends WP_Widget {
 	 */
 	public function update( $new_instance, $old_instance ) {
 
-		$instance                  = $old_instance;
-		$instance['title']         = ( ! empty( $new_instance['title'] ) ) ? strip_tags( $new_instance['title'] ) : '';
-		$instance['text']          = ( ! empty( $new_instance['text'] ) ) ? strip_tags( $new_instance['text'] ) : '';
-		$instance['mailinglist']   = ( ! empty( $new_instance['mailinglist'] ) ) ? esc_sql( $new_instance['mailinglist'] ) : '';
-		$instance['show-name']     = ( ! empty( $new_instance['show-name'] ) ) ? esc_sql( $new_instance['show-name'] ) : false;
-		$instance['thank-you-msg'] = ( ! empty( $new_instance['thank-you-msg'] ) ) ? strip_tags( $new_instance['thank-you-msg'] ) : '';
+		$instance                  		= $old_instance;
+		$instance['title']         		= ( ! empty( $new_instance['title'] ) ) ? strip_tags( $new_instance['title'] ) : '';
+		$instance['text']          		= ( ! empty( $new_instance['text'] ) ) ? strip_tags( $new_instance['text'] ) : '';
+		//$instance['mailinglist']   		= ( ! empty( $new_instance['mailinglist'] ) ) ? esc_sql( $new_instance['mailinglist'] ) : '';
+
+		$instance['mailinglist'] = array();
+
+		if ( isset ( $new_instance['mailinglist'] ) )
+		{
+			foreach ( $new_instance['mailinglist'] as $value )
+			{
+				if ( '' !== trim( $value ) )
+					$instance['mailinglist'][] = $value;
+			}
+		}
+
+
+		$instance['mailinglist_text']   = ( ! empty( $new_instance['mailinglist_text'] ) ) ? esc_sql( $new_instance['mailinglist_text'] ) : '';
+		$instance['show-name']     		= ( ! empty( $new_instance['show-name'] ) ) ? esc_sql( $new_instance['show-name'] ) : false;
+		$instance['thank-you-msg'] 		= ( ! empty( $new_instance['thank-you-msg'] ) ) ? strip_tags( $new_instance['thank-you-msg'] ) : '';
 
 		return $instance;
 

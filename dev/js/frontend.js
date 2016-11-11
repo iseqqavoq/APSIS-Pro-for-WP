@@ -5,11 +5,35 @@ jQuery(document).ready(function ($) {
      */
     $('.apsispro-form').submit(function (e) {
         var $currentForm = $(this);
-        var listid = $currentForm.find('.apsispro-signup-mailinglist-id').val();
-        var email = $(this).find('.apsispro-signup-email').val();
-        var name = $(this).find('.apsispro-signup-name').val();
-        var thankyou = $(this).find('.apsispro-signup-thank-you').val();
+        var email = $currentForm.find('.apsispro-signup-email').val();
+        var name = $currentForm.find('.apsispro-signup-name').val();
+        var thankyou = $currentForm.find('.apsispro-signup-thank-you').val();
 
+        var listElement = $currentForm.find('.apsispro-signup-mailinglist-id');
+        if (listElement.length > 0) {
+            registerSubscriber($currentForm, listElement.val(), email, name, thankyou);
+        }
+        else {
+            var noListID = true;
+            $currentForm.find('.apsispro-signup-mailinglists-id').each(function () {
+                if ($(this).is(':checked')) {
+                    registerSubscriber($currentForm, $(this).val(), email, name, thankyou);
+                    noListID = false;
+                }
+            });
+            if ( noListID ) {
+                $currentForm.next('.apsispro-signup-response').text(ajax_object.error_msg_mailinglist);
+            }
+        }
+
+        return false;
+
+    });
+
+    /*
+     Register subscriber with AJAX call
+     */
+    function registerSubscriber($currentForm, listid, email, name, thankyou) {
         var data = {
             'action': 'apsispro_action',
             'listid': listid,
@@ -35,9 +59,6 @@ jQuery(document).ready(function ($) {
             }
 
         });
-
-        return false;
-
-    });
+    }
 
 });
