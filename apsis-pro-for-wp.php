@@ -216,6 +216,14 @@ class APSIS_Pro_For_WP {
 			'apsispro_shortcode_group_section'
 		);
 
+		add_settings_field(
+			'apsispro_input_submit_name',
+			__( 'Submit name', 'apsispro' ),
+			array( __CLASS__, 'apsispro_input_submit_name_render' ),
+			'apsispro_shortcode_group',
+			'apsispro_shortcode_group_section'
+		);
+
 	}
 
 	/**
@@ -341,6 +349,10 @@ class APSIS_Pro_For_WP {
 
 	}
 
+
+
+
+
 	/**
 	 * Input field for 'Thank you' message
 	 */
@@ -355,6 +367,22 @@ class APSIS_Pro_For_WP {
 		<?php
 
 	}
+
+	/**
+	 * Input field for 'Submit' - name
+	 */
+	public static function apsispro_input_submit_name_render() {
+
+		$options = get_option( 'apsispro_settings' );
+		?>
+		<input type='text'
+		       class='apsispro_input_submit_name'
+		       name='apsispro_settings[apsispro_input_submit_name]'
+		       value='<?php if ( isset( $options['apsispro_input_submit_name'] ) ) : echo $options['apsispro_input_submit_name']; endif; ?>'>
+		<?php
+
+	}
+
 
 	/**
 	 * Instructions for the settings fields
