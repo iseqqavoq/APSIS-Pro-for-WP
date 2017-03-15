@@ -563,7 +563,7 @@ class APSIS_Pro_For_WP {
 	 * @param bool $show_name Decides if name field will be visible
 	 * @param string $thank_you The 'thank you' message
 	 */
-	public static function get_form( $mailinglist, $show_name, $thank_you ) {
+	public static function get_form( $mailinglist, $show_name, $thank_you, $submitname ) {
 
 		if ( ! empty( $mailinglist ) ) : ?>
 			<form action="?apsispro_action" method="post" class="apsispro-form">
@@ -590,7 +590,10 @@ class APSIS_Pro_For_WP {
 				<?php endif; ?>
 				<input type="hidden" name="apsispro-signup-thank-you" class="apsispro-signup-thank-you"
 				       value="<?php echo $thank_you ?>"/>
-				<input type="submit" value="<?php _e( 'Subscribe', 'apsispro' ); ?>" name="apsispro-signup-button"
+				<input type="submit" 
+							 value="<?php echo $submitname ?>"
+
+							 name="apsispro-signup-button"
 				       class="apsispro-signup-button">
 			</form>
 			<p class="apsispro-signup-response"></p>
@@ -598,7 +601,10 @@ class APSIS_Pro_For_WP {
 
 	}
 
+
+
 	/**
+	*                             <?php _e( 'Subscribe', 'apsispro' ); ?>"
 	 * Register shortcodes
 	 */
 	public static function register_shortcodes() {
@@ -617,7 +623,8 @@ class APSIS_Pro_For_WP {
 				'id'       => '',
 				'text'     => false,
 				'name'     => '',
-				'thankyou' => __( 'Thank you for submitting!', 'apsispro' )
+				'thankyou' => __( 'Thank you for submitting!', 'apsispro' ),
+				'submitname' => __('Submit', 'apsispro')
 			), $atts
 		);
 
@@ -626,7 +633,7 @@ class APSIS_Pro_For_WP {
 		$mailinglist_array = array_combine( $id_array, $text_array );
 
 		ob_start();
-		self::get_form( $mailinglist_array, $atts['name'], $atts['thankyou'] );
+		self::get_form( $mailinglist_array, $atts['name'], $atts['thankyou'], $atts['submitname'] );
 		$output = ob_get_clean();
 		return $output;
 
@@ -683,6 +690,7 @@ class APSIS_Pro_Widget extends WP_Widget {
 			echo '<p>' . $instance['text'] . '</p>';
 		endif;
 
+
 		if ( ! empty( $instance['mailinglist'] ) ) :
 
 			$mailinglist_array = array();
@@ -691,9 +699,13 @@ class APSIS_Pro_Widget extends WP_Widget {
 				$mailinglist_array[$mailinglist_array_item[0]] = $mailinglist_array_item[1];
 			}
 
-			APSIS_Pro_For_WP::get_form( $mailinglist_array, $instance['show-name'], $instance['thank-you-msg'] );
+			APSIS_Pro_For_WP::get_form( $mailinglist_array, $instance['show-name'], $instance['thank-you-msg'], $instance['submitname'] );
 
 		endif;
+
+
+
+
 
 		echo $args['after_widget'];
 
@@ -723,12 +735,22 @@ class APSIS_Pro_Widget extends WP_Widget {
 		}
 		if ( isset( $instance['show-name'] ) ) {
 			$show_name = $instance['show-name'];
+		} else {
+			//decide what should be default
+			$show_name = false;
 		}
 		if ( isset( $instance['thank-you-msg'] ) ) {
 			$thank_you_msg = $instance['thank-you-msg'];
 		} else {
 			$thank_you_msg = __( 'Thank you for submitting!', 'apsispro' );
 		}
+		if ( isset( $instance['submitname'] ) ) {
+			$submitname = $instance['submitname'];
+		} else {
+			$submitname = __( 'Submit', 'apsispro' );
+		}
+
+
 		?>
 		<p>
 			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:' ); ?></label>
@@ -750,8 +772,10 @@ class APSIS_Pro_Widget extends WP_Widget {
 				if ( $mailinglists !== false ) :
 					foreach ( $mailinglists as $index => $list_item ) {
 						$checked = '';
-						if ( in_array( $list_item['Id'], $mailinglist ) ) :
-							$checked = 'checked';
+						if ( $mailinglist !== -1 ) :
+							if ( in_array( $list_item['Id'], $mailinglist ) ) :
+								$checked = 'checked';
+							endif;
 						endif;
 						$mailinglist_items .= '<input type="checkbox" name="' . $this->get_field_name( 'mailinglist' ) . '[]" ' . $checked . ' value="' . $list_item['Id'] . '|' . $list_item['Name'] . '">' . $list_item['Name'];
 					}
@@ -772,6 +796,13 @@ class APSIS_Pro_Widget extends WP_Widget {
 			<input class="widefat" id="<?php echo $this->get_field_id( 'thank-you-msg' ); ?>"
 			       name="<?php echo $this->get_field_name( 'thank-you-msg' ); ?>" type="text"
 			       value="<?php echo esc_attr( $thank_you_msg ); ?>">
+		</p>
+		<p>
+			<label
+				for="<?php echo $this->get_field_id( 'submitname' ); ?>"><?php _e( 'Submit name:' ); ?></label>
+			<input class="widefat" id="<?php echo $this->get_field_id( 'submitname' ); ?>"
+			       name="<?php echo $this->get_field_name( 'submitname' ); ?>" type="text"
+			       value="<?php echo esc_attr( $submitname ); ?>">
 		</p>
 
 		<?php
@@ -807,6 +838,7 @@ class APSIS_Pro_Widget extends WP_Widget {
 		$instance['mailinglist_text']   = ( ! empty( $new_instance['mailinglist_text'] ) ) ? esc_sql( $new_instance['mailinglist_text'] ) : '';
 		$instance['show-name']     		= ( ! empty( $new_instance['show-name'] ) ) ? esc_sql( $new_instance['show-name'] ) : false;
 		$instance['thank-you-msg'] 		= ( ! empty( $new_instance['thank-you-msg'] ) ) ? strip_tags( $new_instance['thank-you-msg'] ) : '';
+		$instance['submitname'] 		= ( ! empty( $new_instance['submitname'] ) ) ? strip_tags( $new_instance['submitname'] ) : '';
 
 		return $instance;
 

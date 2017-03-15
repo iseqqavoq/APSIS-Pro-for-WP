@@ -53,6 +53,10 @@ jQuery(document).ready(function ($) {
         if ($('.apsispro_input_thank_you_msg').val() != '') {
             $generatedCode += ' thankyou="' + $('.apsispro_input_thank_you_msg').val() + '"';
         }
+        
+        if ($('.apsispro_input_submit_name').val() != '') {
+            $generatedCode += ' submitname="' + $('.apsispro_input_submit_name').val() + '"';
+        }
 
         $generatedCode += ']';
 
