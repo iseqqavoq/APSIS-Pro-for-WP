@@ -1,9 +1,9 @@
 === APSIS Pro for WP ===
 Contributors: iseqqavoq
 Tags: apsis, newsletter, subscription, mailing list
-Requires at least: 3.9
-Tested up to: 4.6.1
-Stable tag: 1.0.7
+Requires at least: 4.0
+Tested up to: 4.7.3
+Stable tag: 1.0.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -46,6 +46,8 @@ Visit APSIS’ web page at www.apsis.com.
 3. Widget settings
 
 == Changelog ==
+= 1.0.8 =
+* Added widget functionality
 = 1.0.7 =
 * Fixed bug where form always would end up at top, when using the shortcode.
 * Fixed notices that showed up.
