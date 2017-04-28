@@ -616,7 +616,7 @@ class APSIS_Pro_For_WP {
 				'text'     => false,
 				'name'     => '',
 				'thankyou' => __( 'Thank you for submitting!', 'apsispro' ),
-				'submitname' => __('Submit', 'apsispro')
+				'submitname' => __('Subscribe', 'apsispro')
 			), $atts
 		);
 
@@ -691,7 +691,7 @@ class APSIS_Pro_Widget extends WP_Widget {
 			}
 			$submit_name = $instance['submitname'];
 			if( $submit_name == '' ) :
-				$submit_name = __('Submit', 'apsispro');
+				$submit_name = __('Subscribe', 'apsispro');
 			endif;
 
 			APSIS_Pro_For_WP::get_form( $mailinglist_array, $instance['show-name'], $instance['thank-you-msg'], $submit_name );
@@ -738,7 +738,7 @@ class APSIS_Pro_Widget extends WP_Widget {
 		if ( isset( $instance['submitname'] ) ) {
 			$submitname = $instance['submitname'];
 		} else {
-			$submitname = __( 'Submit', 'apsispro' );
+			$submitname = __( 'Subscribe', 'apsispro' );
 		}
 
 

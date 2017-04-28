@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: APSIS Pro for WordPress\n"
-"POT-Creation-Date: 2017-04-28 10:39+0200\n"
-"PO-Revision-Date: 2017-04-28 10:43+0200\n"
+"POT-Creation-Date: 2017-04-28 11:19+0200\n"
+"PO-Revision-Date: 2017-04-28 11:19+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: sv_SE\n"
@@ -76,7 +76,7 @@ msgstr "”Skicka knapp”-text"
 msgid "Verified!"
 msgstr "Verifierad!"
 
-#: apsis-pro-for-wp.php:392
+#: apsis-pro-for-wp.php:387
 #, php-format
 msgid ""
 "Enter your APSIS Pro API Key and select the website you access APSIS Pro "
@@ -87,7 +87,7 @@ msgstr ""
 "till APSIS Pro genom, och klicka på <i>Spara API-inställningar</i>. För mer "
 "information om integrationen med APSIS Pro, %sklicka här%s."
 
-#: apsis-pro-for-wp.php:410
+#: apsis-pro-for-wp.php:405
 msgid ""
 "Modify the settings and click on <i>Generate Shortcode</i> to generate a "
 "shortcode that can be inserted on the site."
@@ -95,7 +95,7 @@ msgstr ""
 "Modifiera inställningarna och klicka på <i>Generera shortcode</i> för att "
 "generera en shortcode som kan placeras på hemsidan."
 
-#: apsis-pro-for-wp.php:451
+#: apsis-pro-for-wp.php:446
 msgid ""
 "An error occured. Please make sure you have entered the correct APSIS API "
 "Key and selected the correct APSIS website."
@@ -103,88 +103,88 @@ msgstr ""
 "Ett fel uppstod. Kontrollera att du har fyllt i korrekt APSIS API-nyckel och "
 "valt korrekt APSIS-hemsida."
 
-#: apsis-pro-for-wp.php:474
+#: apsis-pro-for-wp.php:469
 msgid "Save API Settings"
 msgstr "Spara API-inställningar"
 
-#: apsis-pro-for-wp.php:482
+#: apsis-pro-for-wp.php:477
 msgid "Generate Shortcode"
 msgstr "Generera shortcode"
 
-#: apsis-pro-for-wp.php:487
+#: apsis-pro-for-wp.php:482
 msgid "Generated shortcode:"
 msgstr "Genererad shortcode:"
 
-#: apsis-pro-for-wp.php:496
+#: apsis-pro-for-wp.php:491
 msgid ""
 "If you have any general questions regarding this plugin, please visit "
 "WordPress forums."
 msgstr ""
 "Om du har generella frågor om denna plugin, var god besök WordPress-forumen."
 
-#: apsis-pro-for-wp.php:497
+#: apsis-pro-for-wp.php:492
 #, php-format
 msgid "For more information on integration with APSIS Pro, %sclick here%s."
 msgstr "För mer information om integrationen med APSIS Pro, %sklicka här%s."
 
-#: apsis-pro-for-wp.php:498
+#: apsis-pro-for-wp.php:493
 #, php-format
 msgid "Visit APSIS web page at %swww.apsis.com%s."
 msgstr "Besök APSIS hemsida på %swww.apsis.com%s."
 
-#: apsis-pro-for-wp.php:572
+#: apsis-pro-for-wp.php:567
 msgid "Name: "
 msgstr "Namn:"
 
-#: apsis-pro-for-wp.php:577
+#: apsis-pro-for-wp.php:572
 msgid "E-mail: "
 msgstr "E-post:"
 
-#: apsis-pro-for-wp.php:626 apsis-pro-for-wp.php:744
+#: apsis-pro-for-wp.php:618 apsis-pro-for-wp.php:736
 msgid "Thank you for submitting!"
 msgstr "Tack för din anmälan!"
 
-#: apsis-pro-for-wp.php:627 apsis-pro-for-wp.php:702 apsis-pro-for-wp.php:749
-msgid "Submit"
-msgstr "Skicka"
+#: apsis-pro-for-wp.php:619 apsis-pro-for-wp.php:694 apsis-pro-for-wp.php:741
+msgid "Subscribe"
+msgstr "Anmäl"
 
-#: apsis-pro-for-wp.php:670
+#: apsis-pro-for-wp.php:662
 msgid "APSIS Pro Widget"
 msgstr "APSIS Pro-widget"
 
-#: apsis-pro-for-wp.php:671
+#: apsis-pro-for-wp.php:663
 msgid "APSIS Pro subscription form."
 msgstr "APSIS Pro-formulär"
 
-#: apsis-pro-for-wp.php:723
+#: apsis-pro-for-wp.php:715
 msgid "New title"
 msgstr "Ny titel"
 
-#: apsis-pro-for-wp.php:728
+#: apsis-pro-for-wp.php:720
 msgid "New text"
 msgstr "Ny Text"
 
-#: apsis-pro-for-wp.php:755
+#: apsis-pro-for-wp.php:747
 msgid "Title:"
 msgstr "Titel:"
 
-#: apsis-pro-for-wp.php:761
+#: apsis-pro-for-wp.php:753
 msgid "Text:"
 msgstr "Text:"
 
-#: apsis-pro-for-wp.php:766
+#: apsis-pro-for-wp.php:758
 msgid "Mailing List(s):"
 msgstr "Välj e-postlistor:"
 
-#: apsis-pro-for-wp.php:787
+#: apsis-pro-for-wp.php:779
 msgid "Show name:"
 msgstr "Visa namn:"
 
-#: apsis-pro-for-wp.php:794
+#: apsis-pro-for-wp.php:786
 msgid "Thank you message:"
 msgstr "Tack-meddelande:"
 
-#: apsis-pro-for-wp.php:801
+#: apsis-pro-for-wp.php:793
 msgid "Submit name:"
 msgstr "”Skicka knapp”-text:"
 
@@ -210,11 +210,11 @@ msgstr ""
 msgid "http://www.iqq.se/"
 msgstr ""
 
+#~ msgid "Submit"
+#~ msgstr "Skicka"
+
 #~ msgid "Select Mailing List"
 #~ msgstr "Välj e-postlista"
-
-#~ msgid "Subscribe"
-#~ msgstr "Anmäl"
 
 #~ msgid "Mailing List:"
 #~ msgstr "E-postlista:"
