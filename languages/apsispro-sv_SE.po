@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: APSIS Pro for WordPress\n"
-"POT-Creation-Date: 2016-04-06 10:14+0200\n"
-"PO-Revision-Date: 2016-04-06 10:15+0200\n"
+"POT-Creation-Date: 2017-04-28 10:39+0200\n"
+"PO-Revision-Date: 2017-04-28 10:43+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: sv_SE\n"
@@ -28,47 +28,55 @@ msgstr "Ett fel uppstod, var god försök senare."
 msgid "The e-mail address is not correct."
 msgstr "E-postadressen är inte korrekt."
 
-#: apsis-pro-for-wp.php:115
+#: apsis-pro-for-wp.php:73
+msgid "A mailing list needs to be selected."
+msgstr "En e-postlista måste väljas."
+
+#: apsis-pro-for-wp.php:126
 msgid "APSIS Pro Settings"
 msgstr "APSIS Pro-inställningar"
 
-#: apsis-pro-for-wp.php:115
+#: apsis-pro-for-wp.php:126
 msgid "APSIS Pro"
 msgstr "APSIS Pro"
 
-#: apsis-pro-for-wp.php:133
+#: apsis-pro-for-wp.php:144
 msgid "APSIS Pro settings"
 msgstr "APSIS Pro-inställningar"
 
-#: apsis-pro-for-wp.php:147
+#: apsis-pro-for-wp.php:158
 msgid "Shortcode Generator"
 msgstr "Shortcode-generator"
 
-#: apsis-pro-for-wp.php:154
+#: apsis-pro-for-wp.php:165
 msgid "APSIS Pro API Key"
 msgstr "APSIS Pro API-nyckel"
 
-#: apsis-pro-for-wp.php:162
+#: apsis-pro-for-wp.php:173
 msgid "We access APSIS Pro via"
 msgstr "Vi får åtkomst till APSIS Pro via"
 
-#: apsis-pro-for-wp.php:178
-msgid "Select Mailing List"
-msgstr "Välj e-postlista"
+#: apsis-pro-for-wp.php:197
+msgid "Select Mailing List(s)"
+msgstr "Välj e-postlistor"
 
-#: apsis-pro-for-wp.php:186
+#: apsis-pro-for-wp.php:205
 msgid "Show name field"
 msgstr "Visa namnfält"
 
-#: apsis-pro-for-wp.php:194
+#: apsis-pro-for-wp.php:213
 msgid "Thank you message"
 msgstr "Tack-meddelande"
 
-#: apsis-pro-for-wp.php:227
+#: apsis-pro-for-wp.php:221
+msgid "Submit name"
+msgstr "”Skicka knapp”-text"
+
+#: apsis-pro-for-wp.php:268
 msgid "Verified!"
 msgstr "Verifierad!"
 
-#: apsis-pro-for-wp.php:322
+#: apsis-pro-for-wp.php:392
 #, php-format
 msgid ""
 "Enter your APSIS Pro API Key and select the website you access APSIS Pro "
@@ -79,7 +87,7 @@ msgstr ""
 "till APSIS Pro genom, och klicka på <i>Spara API-inställningar</i>. För mer "
 "information om integrationen med APSIS Pro, %sklicka här%s."
 
-#: apsis-pro-for-wp.php:340
+#: apsis-pro-for-wp.php:410
 msgid ""
 "Modify the settings and click on <i>Generate Shortcode</i> to generate a "
 "shortcode that can be inserted on the site."
@@ -87,7 +95,7 @@ msgstr ""
 "Modifiera inställningarna och klicka på <i>Generera shortcode</i> för att "
 "generera en shortcode som kan placeras på hemsidan."
 
-#: apsis-pro-for-wp.php:364
+#: apsis-pro-for-wp.php:451
 msgid ""
 "An error occured. Please make sure you have entered the correct APSIS API "
 "Key and selected the correct APSIS website."
@@ -95,86 +103,90 @@ msgstr ""
 "Ett fel uppstod. Kontrollera att du har fyllt i korrekt APSIS API-nyckel och "
 "valt korrekt APSIS-hemsida."
 
-#: apsis-pro-for-wp.php:387
+#: apsis-pro-for-wp.php:474
 msgid "Save API Settings"
 msgstr "Spara API-inställningar"
 
-#: apsis-pro-for-wp.php:395
+#: apsis-pro-for-wp.php:482
 msgid "Generate Shortcode"
 msgstr "Generera shortcode"
 
-#: apsis-pro-for-wp.php:400
+#: apsis-pro-for-wp.php:487
 msgid "Generated shortcode:"
 msgstr "Genererad shortcode:"
 
-#: apsis-pro-for-wp.php:409
+#: apsis-pro-for-wp.php:496
 msgid ""
 "If you have any general questions regarding this plugin, please visit "
 "WordPress forums."
 msgstr ""
 "Om du har generella frågor om denna plugin, var god besök WordPress-forumen."
 
-#: apsis-pro-for-wp.php:410
+#: apsis-pro-for-wp.php:497
 #, php-format
 msgid "For more information on integration with APSIS Pro, %sclick here%s."
 msgstr "För mer information om integrationen med APSIS Pro, %sklicka här%s."
 
-#: apsis-pro-for-wp.php:411
+#: apsis-pro-for-wp.php:498
 #, php-format
 msgid "Visit APSIS web page at %swww.apsis.com%s."
 msgstr "Besök APSIS hemsida på %swww.apsis.com%s."
 
-#: apsis-pro-for-wp.php:487
+#: apsis-pro-for-wp.php:572
 msgid "Name: "
 msgstr "Namn:"
 
-#: apsis-pro-for-wp.php:492
+#: apsis-pro-for-wp.php:577
 msgid "E-mail: "
 msgstr "E-post:"
 
-#: apsis-pro-for-wp.php:499
-msgid "Subscribe"
-msgstr "Anmäl"
-
-#: apsis-pro-for-wp.php:525 apsis-pro-for-wp.php:618
+#: apsis-pro-for-wp.php:626 apsis-pro-for-wp.php:744
 msgid "Thank you for submitting!"
 msgstr "Tack för din anmälan!"
 
-#: apsis-pro-for-wp.php:561
+#: apsis-pro-for-wp.php:627 apsis-pro-for-wp.php:702 apsis-pro-for-wp.php:749
+msgid "Submit"
+msgstr "Skicka"
+
+#: apsis-pro-for-wp.php:670
 msgid "APSIS Pro Widget"
 msgstr "APSIS Pro-widget"
 
-#: apsis-pro-for-wp.php:562
+#: apsis-pro-for-wp.php:671
 msgid "APSIS Pro subscription form."
 msgstr "APSIS Pro-formulär"
 
-#: apsis-pro-for-wp.php:600
+#: apsis-pro-for-wp.php:723
 msgid "New title"
 msgstr "Ny titel"
 
-#: apsis-pro-for-wp.php:605
+#: apsis-pro-for-wp.php:728
 msgid "New text"
 msgstr "Ny Text"
 
-#: apsis-pro-for-wp.php:622
+#: apsis-pro-for-wp.php:755
 msgid "Title:"
 msgstr "Titel:"
 
-#: apsis-pro-for-wp.php:628
+#: apsis-pro-for-wp.php:761
 msgid "Text:"
 msgstr "Text:"
 
-#: apsis-pro-for-wp.php:633
-msgid "Mailing List:"
-msgstr "E-postlista:"
+#: apsis-pro-for-wp.php:766
+msgid "Mailing List(s):"
+msgstr "Välj e-postlistor:"
 
-#: apsis-pro-for-wp.php:640
+#: apsis-pro-for-wp.php:787
 msgid "Show name:"
 msgstr "Visa namn:"
 
-#: apsis-pro-for-wp.php:647
+#: apsis-pro-for-wp.php:794
 msgid "Thank you message:"
 msgstr "Tack-meddelande:"
+
+#: apsis-pro-for-wp.php:801
+msgid "Submit name:"
+msgstr "”Skicka knapp”-text:"
 
 #. Plugin Name of the plugin/theme
 msgid "APSIS Pro for WP"
@@ -197,6 +209,15 @@ msgstr ""
 #. Author URI of the plugin/theme
 msgid "http://www.iqq.se/"
 msgstr ""
+
+#~ msgid "Select Mailing List"
+#~ msgstr "Välj e-postlista"
+
+#~ msgid "Subscribe"
+#~ msgstr "Anmäl"
+
+#~ msgid "Mailing List:"
+#~ msgstr "E-postlista:"
 
 #~ msgid ""
 #~ "Enter your APSIS Pro API Key and click on <i>Save API Key</i>. For more "

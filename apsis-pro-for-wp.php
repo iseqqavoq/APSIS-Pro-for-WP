@@ -194,7 +194,7 @@ class APSIS_Pro_For_WP {
 
 		add_settings_field(
 			'apsispro_select_mailing_list',
-			__( 'Select Mailing List', 'apsispro' ),
+			__( 'Select Mailing List(s)', 'apsispro' ),
 			array( __CLASS__, 'apsispro_select_mailing_list_render' ),
 			'apsispro_shortcode_group',
 			'apsispro_shortcode_group_section'
@@ -690,7 +690,6 @@ class APSIS_Pro_Widget extends WP_Widget {
 			echo '<p>' . $instance['text'] . '</p>';
 		endif;
 
-
 		if ( ! empty( $instance['mailinglist'] ) ) :
 
 			$mailinglist_array = array();
@@ -698,14 +697,14 @@ class APSIS_Pro_Widget extends WP_Widget {
 				$mailinglist_array_item = explode( '|', $list_item );
 				$mailinglist_array[$mailinglist_array_item[0]] = $mailinglist_array_item[1];
 			}
+			$submit_name = $instance['submitname'];
+			if( $submit_name == '' ) :
+				$submit_name = __('Submit', 'apsispro');
+			endif;
 
-			APSIS_Pro_For_WP::get_form( $mailinglist_array, $instance['show-name'], $instance['thank-you-msg'], $instance['submitname'] );
+			APSIS_Pro_For_WP::get_form( $mailinglist_array, $instance['show-name'], $instance['thank-you-msg'], $submit_name );
 
 		endif;
-
-
-
-
 
 		echo $args['after_widget'];
 
@@ -753,18 +752,18 @@ class APSIS_Pro_Widget extends WP_Widget {
 
 		?>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:' ); ?></label>
+			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'apsispro' ); ?></label>
 			<input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>"
 			       name="<?php echo $this->get_field_name( 'title' ); ?>" type="text"
 			       value="<?php echo esc_attr( $title ); ?>">
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'text' ); ?>"><?php _e( 'Text:' ); ?></label>
+			<label for="<?php echo $this->get_field_id( 'text' ); ?>"><?php _e( 'Text:', 'apsispro' ); ?></label>
 			<textarea class="widefat" rows="6" cols="20" id="<?php echo $this->get_field_id( 'text' ); ?>"
 			          name="<?php echo $this->get_field_name( 'text' ); ?>"><?php echo $text; ?></textarea>
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'mailinglist' ); ?>"><?php _e( 'Mailing List:' ); ?></label>
+			<label for="<?php echo $this->get_field_id( 'mailinglist' ); ?>"><?php _e( 'Mailing List(s):', 'apsispro' ); ?></label>
 			<div class="apsispro_mailinglist_checkboxes">
 				<?php
 				$mailinglist_items = '';
@@ -777,7 +776,7 @@ class APSIS_Pro_Widget extends WP_Widget {
 								$checked = 'checked';
 							endif;
 						endif;
-						$mailinglist_items .= '<input type="checkbox" name="' . $this->get_field_name( 'mailinglist' ) . '[]" ' . $checked . ' value="' . $list_item['Id'] . '|' . $list_item['Name'] . '">' . $list_item['Name'];
+						$mailinglist_items .= '<label style="margin-right: 8px;"><input type="checkbox" name="' . $this->get_field_name( 'mailinglist' ) . '[]" ' . $checked . ' value="' . $list_item['Id'] . '|' . $list_item['Name'] . '">' . $list_item['Name'] . '</label>';
 					}
 				endif;
 				echo $mailinglist_items;
@@ -785,21 +784,21 @@ class APSIS_Pro_Widget extends WP_Widget {
 			</div>
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'show-name' ); ?>"><?php _e( 'Show name:' ); ?></label>
+			<label for="<?php echo $this->get_field_id( 'show-name' ); ?>"><?php _e( 'Show name:', 'apsispro' ); ?></label>
 			<input class="widefat" id="<?php echo $this->get_field_id( 'show-name' ); ?>"
 				<?php checked( $show_name, 'on' ); ?>
 				   name="<?php echo $this->get_field_name( 'show-name' ); ?>" type="checkbox">
 		</p>
 		<p>
 			<label
-				for="<?php echo $this->get_field_id( 'thank-you-msg' ); ?>"><?php _e( 'Thank you message:' ); ?></label>
+				for="<?php echo $this->get_field_id( 'thank-you-msg' ); ?>"><?php _e( 'Thank you message:', 'apsispro' ); ?></label>
 			<input class="widefat" id="<?php echo $this->get_field_id( 'thank-you-msg' ); ?>"
 			       name="<?php echo $this->get_field_name( 'thank-you-msg' ); ?>" type="text"
 			       value="<?php echo esc_attr( $thank_you_msg ); ?>">
 		</p>
 		<p>
 			<label
-				for="<?php echo $this->get_field_id( 'submitname' ); ?>"><?php _e( 'Submit name:' ); ?></label>
+				for="<?php echo $this->get_field_id( 'submitname' ); ?>"><?php _e( 'Submit name:', 'apsispro' ); ?></label>
 			<input class="widefat" id="<?php echo $this->get_field_id( 'submitname' ); ?>"
 			       name="<?php echo $this->get_field_name( 'submitname' ); ?>" type="text"
 			       value="<?php echo esc_attr( $submitname ); ?>">
