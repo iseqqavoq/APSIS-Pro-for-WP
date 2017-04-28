@@ -2,15 +2,15 @@
 Contributors: iseqqavoq
 Tags: apsis, newsletter, subscription, mailing list
 Requires at least: 4.0
-Tested up to: 4.7.3
-Stable tag: 1.0.8
+Tested up to: 4.7.4
+Stable tag: 1.0.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 APSIS Pro for WP integrates APSIS Pro with WordPress, so you can add subscription forms to APSIS Pro on your site.
 
 == Description ==
-APSIS Pro for WP integrates APSIS Pro with WordPress and makes it possible to add subscription forms to APSIS Pro on your site. You can have multiple subscription forms pointing to different mailing lists and the forms can be added to your site with shortcodes and widgets.
+APSIS Pro for WP integrates APSIS Pro with WordPress and makes it possible to add subscription forms to APSIS Pro on your site. You can have multiple subscription forms pointing to different mailing lists and one form can have checkboxes for multiple mailing lists. The forms can be added to your site with shortcodes and widgets.
 
 If you have any general questions regarding this plugin, please visit WordPress forums.
 
@@ -31,7 +31,7 @@ Feel free to make pull requests for improvement on Github at https://github.com/
 
 5. Click Save API Settings.
 
-6. To add the subscription form to your site, either use the Shortcode Generator on the settings page to generate a shortcode or go to Widgets and add APSIS Pro Widget.
+6. To add the subscription form to your site, either use the Shortcode Generator on the settings page to generate a shortcode or go to Widgets and add APSIS Pro Widget. Check off one or more mailing lists that you want to the form to use.
 
 == Frequently Asked Questions ==
 If you have any general questions regarding this plugin, please visit WordPress forums.
@@ -46,8 +46,15 @@ Visit APSIS’ web page at www.apsis.com.
 3. Widget settings
 
 == Changelog ==
+= 1.0.9 =
+* Fixed bug when using form with only one mailing list.
+* Fixed default text for submit button text in widgets.
+* Modified description texts and translations.
+* Modified readme and changelog to include more info about 1.0.8.
 = 1.0.8 =
-* Added widget functionality
+* Added functionality to have checkboxes for multiple mailing lists in one form.
+* Added functionality to be able to change submit button text.
+* Added hook after form submission.
 = 1.0.7 =
 * Fixed bug where form always would end up at top, when using the shortcode.
 * Fixed notices that showed up.
